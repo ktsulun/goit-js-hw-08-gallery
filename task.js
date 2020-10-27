@@ -26,6 +26,12 @@ function createImagesGallery(imgs) {
     .join("");
 }
 
+const lightboxButtonEl = document.querySelector(".lightbox__button");
+
+const lightboxImageEl = document.querySelector(".lightbox__image");
+const lightboxOverlayEl = document.querySelector(".lightbox__overlay");
+const lightboxEl = document.querySelector(".lightbox.js-lightbox");
+
 function onGalleryContainerClick(evt) {
   evt.preventDefault();
   console.log(evt.target.dataset.source);
@@ -33,35 +39,25 @@ function onGalleryContainerClick(evt) {
   if (evt.target.nodeName !== "IMG") {
     return;
   } else {
-    document.querySelector(".lightbox.js-lightbox").classList.add("is-open");
+    lightboxEl.classList.add("is-open");
 
-    const lightboxButtonEl = document.querySelector(".lightbox__button");
-
-    const lightboxImageEl = document.querySelector(".lightbox__image");
+ 
     lightboxImageEl.src = evt.target.dataset.source;
     lightboxImageEl.alt = evt.target.alt;
     lightboxButtonEl.addEventListener("click", onCloseModal);
-    document
-      .querySelector(".lightbox__overlay")
-      .addEventListener("click", onCloseModal);
+    lightboxOverlayEl.addEventListener("click", onCloseModal);
     window.addEventListener("keydown", onEscKeyPress);
   }
 }
 
-function stopDefAction(evt) {
-  evt.preventDefault();
-}
+
 
 function onCloseModal() {
-  document.querySelector(".lightbox.js-lightbox").classList.remove("is-open");
+  lightboxEl.classList.remove("is-open");
   lightboxImageEl.src = "";
 }
 
-function onBackdropClick(event) {
-  if (event.currentTarget === event.target) {
-    onCloseModal();
-  }
-}
+
 
 function onEscKeyPress(event) {
   const ESC_KEY_CODE = "Escape";
